@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <title>Admin — Iamatto Web Catalog</title>
+  <link rel="stylesheet" href="./admin.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="top__inner">
+      <a class="brand" href="../index.html">Iamatto Web Catalog</a>
+      <div class="top__actions">
+        <button id="logoutBtn" class="btn btn--ghost" type="button" hidden>Logout</button>
+        <a class="btn" href="../index.html">Back to site</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="card">
+      <h1 class="h1">Admin</h1>
+      <p class="muted">Login uses a secure email magic-link. Only allowed admin emails can login.</p>
+
+      <div id="authBox" class="auth">
+        <label class="field">
+          <span class="field__label">Admin email</span>
+          <input id="emailInput" class="field__input" type="email" placeholder="you@example.com" />
+        </label>
+        <button id="loginBtn" class="btn" type="button">Send login link</button>
+        <div id="authMsg" class="muted"></div>
+      </div>
+
+      <div id="meBox" class="me" hidden>
+        <div class="pill">Logged in as <span id="meEmail"></span></div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <section class="card">
+        <div class="row">
+          <h2 class="h2">Catalogue data</h2>
+          <div class="row__actions">
+            <button id="reloadBtn" class="btn btn--ghost" type="button" disabled>Reload</button>
+            <button id="saveBtn" class="btn" type="button" disabled>Save</button>
+          </div>
+        </div>
+        <p class="muted">Edit JSON directly (fast MVP). Later we can make a full form UI.</p>
+        <textarea id="catalogueJson" class="textarea" spellcheck="false" disabled></textarea>
+      </section>
+
+      <section class="card">
+        <div class="row">
+          <h2 class="h2">Config</h2>
+          <div class="row__actions">
+            <button id="reloadCfgBtn" class="btn btn--ghost" type="button" disabled>Reload</button>
+            <button id="saveCfgBtn" class="btn" type="button" disabled>Save</button>
+          </div>
+        </div>
+        <p class="muted">Stores backend config (example: contact info).</p>
+        <textarea id="configJson" class="textarea" spellcheck="false" disabled></textarea>
+      </section>
+    </section>
+
+    <section class="card">
+      <h2 class="h2">First-time setup</h2>
+      <ol class="muted">
+        <li>Run backend: <span class="mono">cd server</span> → <span class="mono">npm install</span> → <span class="mono">npm run dev</span></li>
+        <li>Open this page again via backend URL, then request login link.</li>
+        <li>If SMTP is not set, the link is printed in the backend console (dev mode).</li>
+      </ol>
+    </section>
+  </main>
+
+  <script type="module" src="./admin.js"></script>
+</body>
+</html>
