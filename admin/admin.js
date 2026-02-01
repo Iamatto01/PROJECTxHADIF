@@ -1,6 +1,8 @@
 const $ = (s, r = document) => r.querySelector(s);
 
 // Admin Configuration
+// NOTE: For production, consider moving sensitive configuration to environment variables
+// or a secure configuration file that is not committed to the repository
 const ADMIN_CONFIG = {
   primaryAdminEmail: "muhammadsaifudinmj@gmail.com",
   githubRepo: "Iamatto01/PROJECTxHADIF",
@@ -139,8 +141,8 @@ els.generateWebsiteBtn.addEventListener("click", async () => {
     }
     
     // Fall back to direct GitHub API call
-    // Note: This requires CORS to be enabled on GitHub API or a browser extension
-    // For production, this should be handled by the backend
+    // NOTE: Using prompt() for token collection is a temporary solution for demonstration.
+    // For production, implement server-side token management with proper security practices.
     const githubToken = prompt("Enter your GitHub Personal Access Token (with 'repo' and 'actions' scopes):\n\nYou can create one at: https://github.com/settings/tokens");
     
     if (!githubToken) {
@@ -154,7 +156,7 @@ els.generateWebsiteBtn.addEventListener("click", async () => {
         method: "POST",
         headers: {
           "Accept": "application/vnd.github.v3+json",
-          "Authorization": `token ${githubToken}`,
+          "Authorization": `Bearer ${githubToken}`,
           "Content-Type": "application/json"
         },
         body: JSON.stringify({

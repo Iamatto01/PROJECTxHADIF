@@ -222,13 +222,24 @@ function pageHtml({ sku, name, slug }) {
 function gitExec(command, errorMessage) {
   try {
     console.log(`   Running: git ${command}`);
-    execSync(`git ${command}`, { 
+    const output = execSync(`git ${command}`, { 
       stdio: 'pipe',
       encoding: 'utf8'
     });
+    return { success: true, output };
   } catch (error) {
-    console.warn(`⚠️  ${errorMessage}: ${error.message}`);
-    // Don't throw - continue even if git commands fail (e.g., no changes, already pushed, etc.)
+    // Log appropriately based on error type
+    const isExpectedError = error.message.includes('nothing to commit') || 
+                           error.message.includes('up-to-date') ||
+                           error.message.includes('already exists');
+    
+    if (isExpectedError) {
+      console.log(`   ℹ️  ${errorMessage} (expected): ${error.message.split('\n')[0]}`);
+    } else {
+      console.warn(`⚠️  ${errorMessage}: ${error.message.split('\n')[0]}`);
+    }
+    
+    return { success: false, error: error.message };
   }
 }
 
@@ -237,8 +248,8 @@ function commitAndPush() {
   console.log("\n📝 Committing and pushing generated files to GitHub...");
   
   // Configure git user if not already configured (for CI environments)
-  gitExec('config user.email "github-actions[bot]@users.noreply.github.com"', 'Could not configure git email');
-  gitExec('config user.name "GitHub Actions"', 'Could not configure git name');
+  gitExec('config --local user.email "github-actions[bot]@users.noreply.github.com"', 'Could not configure git email');
+  gitExec('config --local user.name "GitHub Actions"', 'Could not configure git name');
   
   // Add all generated HTML files
   gitExec('add catalogue/**/*.html', 'Could not add files');
@@ -253,12 +264,19 @@ function commitAndPush() {
   }
   
   // Commit the changes
-  gitExec('commit -m "🤖 Auto-generated catalogue preview pages"', 'Could not commit changes');
+  const commitResult = gitExec('commit -m "🤖 Auto-generated catalogue preview pages"', 'Could not commit changes');
+  if (!commitResult.success) {
+    console.log("⚠️  Skipping push (commit failed)");
+    return;
+  }
   
   // Push to the current branch
-  gitExec('push', 'Could not push changes');
-  
-  console.log("✅ Successfully pushed generated files to GitHub!");
+  const pushResult = gitExec('push', 'Could not push changes');
+  if (pushResult.success) {
+    console.log("✅ Successfully pushed generated files to GitHub!");
+  } else {
+    console.log("⚠️  Generated files committed locally but not pushed to GitHub");
+  }
 }
 
 // --- Main Function: Reads data and writes files ---
