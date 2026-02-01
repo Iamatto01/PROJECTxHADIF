@@ -45,6 +45,7 @@ const els = {
   dlgTags: $("#dlgTags"),
   dlgSku: $("#dlgSku"),
   dlgPreview: $("#dlgPreview"),
+  previewFrame: $("#previewFrame"),
 
   buyBtn: $("#buyBtn"),
   openPreviewBtn: null,
@@ -356,7 +357,15 @@ function openProduct(sku) {
     els.dlgTags.append(el("span", { class: "badge", text: t }));
   }
 
+  // Set preview background gradient
   els.dlgPreview.style.cssText = makeThumbStyle(item.accent);
+
+  // Load preview page in iframe
+  const slug = slugify(item.name);
+  const previewUrl = `./catalogue/${slug}/${slug}.html`;
+  if (els.previewFrame) {
+    els.previewFrame.src = previewUrl;
+  }
 
   // Lazily inject a preview button next to Buy/Copy
   if (!els.openPreviewBtn) {
@@ -374,9 +383,7 @@ function openProduct(sku) {
 
   if (els.openPreviewBtn) {
     els.openPreviewBtn.onclick = () => {
-      const slug = slugify(item.name);
-      const url = `./catalogue/${slug}/${slug}.html`;
-      window.open(url, "_blank", "noopener,noreferrer");
+      window.open(previewUrl, "_blank", "noopener,noreferrer");
     };
   }
 
