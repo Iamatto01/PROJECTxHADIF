@@ -221,7 +221,7 @@ function pageHtml({ sku, name, slug }) {
 async function main() {
   console.log("🚀 Netlify Build: Generating Website Preview Pages...");
   
-  const outRoot = path.resolve("../catalogue"); // Target folder: /catalogue/
+  const outRoot = path.resolve("catalogue"); // Target folder: /catalogue/
   const reserved = new Set(["_shared"]); // Don't overwrite this folder
   const used = new Map(); // Track slugs to avoid duplicates
 

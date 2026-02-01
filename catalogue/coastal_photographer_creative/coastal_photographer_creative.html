@@ -3,22 +3,162 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
   <title>Coastal Photographer Creative — Preview</title>
+  <meta name="description" content="Preview: Coastal Photographer Creative (PORT-5498)." />
   <link rel="stylesheet" href="../_shared/preview.css" />
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
+
   <header class="hdr" role="banner">
     <div class="hdr__inner">
-      <a class="brand" href="../../index.html">Template Preview</a>
+      <a class="brand" href="../../index.html" aria-label="Back to catalogue">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span class="brand__text">
+          <span class="brand__name" id="brandName">Template Preview</span>
+          <span class="brand__sub" id="brandSub">—</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Preview navigation">
+        <a class="nav__link" href="#about">About</a>
+        <a class="nav__link" href="#offer">Offer</a>
+        <a class="nav__link" href="#proof">Proof</a>
+        <a class="nav__link" href="#faq">FAQ</a>
+        <a class="nav__link nav__link--cta" href="#contact">Contact</a>
+      </nav>
+
+      <div class="hdr__actions">
+        <button id="themeToggle" class="btn btn--ghost" type="button">Theme</button>
+        <a class="btn" href="../../index.html">Back</a>
+      </div>
     </div>
   </header>
+
   <main id="main" class="main" role="main">
-    <section class="hero">
-      <h1 id="title">Coastal Photographer Creative</h1>
-      <p id="subtitle">Experience exceptional photography with quality service and attention to detail.</p>
+    <section class="hero" aria-label="Hero">
+      <div class="hero__inner">
+        <div class="hero__copy">
+          <div class="hero__kicker" id="kicker">Template</div>
+          <h1 class="hero__title" id="title">Loading…</h1>
+          <p class="hero__sub" id="subtitle"></p>
+
+          <div class="hero__meta">
+            <div class="meta">
+              <div class="meta__label">Template code</div>
+              <div class="meta__value" id="sku">—</div>
+            </div>
+            <div class="meta">
+              <div class="meta__label">Style</div>
+              <div class="meta__value" id="style">—</div>
+            </div>
+            <div class="meta">
+              <div class="meta__label">Price</div>
+              <div class="meta__value" id="price">—</div>
+            </div>
+          </div>
+
+          <div class="hero__actions">
+            <button id="buyBtn" class="btn" type="button">Buy this template</button>
+            <button id="copySkuBtn" class="btn btn--ghost" type="button">Copy code</button>
+          </div>
+
+          <div class="chips" id="chips" aria-label="Tags"></div>
+        </div>
+
+        <div class="hero__mock" aria-hidden="true">
+          <div class="mock">
+            <div class="mock__top"></div>
+            <div class="mock__body">
+              <div class="mock__h"></div>
+              <div class="mock__p"></div>
+              <div class="mock__p"></div>
+              <div class="mock__cards">
+                <div class="mock__card"></div>
+                <div class="mock__card"></div>
+                <div class="mock__card"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
+
+    <section class="sec" id="about" aria-label="About">
+      <div class="sec__head">
+        <h2 class="sec__title">About</h2>
+        <p class="sec__desc" id="aboutText"></p>
+      </div>
+      <div class="grid3" id="aboutCards"></div>
+    </section>
+
+    <section class="sec" id="offer" aria-label="Offer">
+      <div class="sec__head">
+        <h2 class="sec__title" id="offerTitle">What you get</h2>
+        <p class="sec__desc">A buyer-ready layout with clear sections and strong call-to-action.</p>
+      </div>
+      <div class="grid2">
+        <div class="panel">
+          <div class="panel__title">Includes</div>
+          <ul class="list" id="includes"></ul>
+        </div>
+        <div class="panel">
+          <div class="panel__title">Pages</div>
+          <ul class="list" id="pages"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="proof" aria-label="Proof">
+      <div class="sec__head">
+        <h2 class="sec__title">Proof & trust</h2>
+        <p class="sec__desc">These blocks show how the website can look for real customers.</p>
+      </div>
+      <div class="grid3" id="proofCards"></div>
+    </section>
+
+    <section class="sec" id="faq" aria-label="FAQ">
+      <div class="sec__head">
+        <h2 class="sec__title">FAQ</h2>
+        <p class="sec__desc">Common questions buyers ask before purchasing.</p>
+      </div>
+      <div class="faq" id="faqList"></div>
+    </section>
+
+    <section class="sec sec--contact" id="contact" aria-label="Contact">
+      <div class="contact">
+        <div class="contact__copy">
+          <h2 class="contact__title">Ready to customize this template?</h2>
+          <p class="contact__desc">Send the code and I’ll deliver the ZIP + quick edit guide.</p>
+          <div class="contact__row">
+            <button id="contactBuyBtn" class="btn" type="button">Buy now</button>
+            <a class="btn btn--ghost" href="../../index.html">Browse more templates</a>
+          </div>
+        </div>
+        <div class="contact__panel">
+          <div class="panel">
+            <div class="panel__title">Best for</div>
+            <ul class="list" id="bestFor"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="ftr" role="contentinfo">
+      <div class="ftr__inner">
+        <div>
+          <div class="ftr__title">Coastal Photographer Creative</div>
+          <div class="ftr__muted">Preview page: /catalogue/coastal_photographer_creative/coastal_photographer_creative.html</div>
+        </div>
+        <a class="ftr__link" href="../../index.html">Back to catalogue</a>
+      </div>
+    </footer>
   </main>
-  <script>window.PREVIEW_SKU = "PORT-5498";</script>
+
+  <script>
+    window.PREVIEW_SKU = "PORT-5498";
+  </script>
   <script type="module" src="../_shared/preview.js"></script>
 </body>
 </html>
