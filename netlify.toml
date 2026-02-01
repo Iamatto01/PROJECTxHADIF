@@ -1,0 +1,32 @@
+# Netlify Build Configuration
+# This file tells Netlify how to build and deploy your site
+
+[build]
+  # Command to run before deploying
+  # This generates all the preview pages from catalogue-data.js
+  command = "node tools/generate-previews.mjs"
+  
+  # Directory to publish (the root of your site)
+  # Leave as "." to publish the entire repository root
+  publish = "."
+
+# Optional: Prevent Netlify from installing dependencies
+# (not needed since we use only Node.js built-in modules)
+[build.environment]
+  NODE_VERSION = "18"
+
+# Optional: Headers for better caching
+[[headers]]
+  for = "/catalogue/*/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

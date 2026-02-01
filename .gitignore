@@ -37,3 +37,12 @@ Desktop.ini
 # Build outputs (if you add a build step later)
 dist/
 build/
+
+# Netlify-generated files (optional)
+# Uncomment these lines if you want Netlify to generate preview pages on every deploy
+# and keep them out of your git history (recommended for cleaner repo)
+# catalogue/*/
+# !catalogue/_shared/
+# !catalogue/catalogue-data.js
+# !catalogue/config.js
+# !catalogue/store.js
