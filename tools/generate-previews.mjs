@@ -1,8 +1,8 @@
 /**
- * Website Preview Generator (Netlify-Optimized)
+ * Website Preview Generator (GitHub Preview Architecture)
  * 
  * This script generates HTML preview pages for each item in the catalogue.
- * It's designed to run during Netlify builds - no git operations needed!
+ * It automatically commits and pushes the generated files back to GitHub.
  * 
  * Usage:
  *   node tools/generate-previews.mjs
@@ -11,16 +11,17 @@
  *   - Reads items from catalogue-data.js
  *   - Generates individual HTML preview pages
  *   - Saves files to /catalogue/[slug]/[slug].html
+ *   - Commits and pushes changes to GitHub (main branch)
  * 
- * Netlify Integration:
- *   - Set Build Command: node tools/generate-previews.mjs
- *   - Set Publish Directory: . (or leave blank)
- *   - Files are generated fresh on every deploy
- *   - No need to commit generated files to git!
+ * GitHub Integration:
+ *   - Generates files locally or in CI
+ *   - Automatically commits generated HTML files
+ *   - Pushes changes back to the repository
  */
 
 import fs from "node:fs/promises";
 import path from "node:path";
+import { execSync } from "node:child_process";
 
 // Import your data
 import { ITEMS } from "../catalogue/catalogue-data.js";
@@ -217,9 +218,70 @@ function pageHtml({ sku, name, slug }) {
 `;
 }
 
+// --- Helper: Execute git commands ---
+function gitExec(command, errorMessage) {
+  try {
+    console.log(`   Running: git ${command}`);
+    const output = execSync(`git ${command}`, { 
+      stdio: 'pipe',
+      encoding: 'utf8'
+    });
+    return { success: true, output };
+  } catch (error) {
+    // Log appropriately based on error type
+    const isExpectedError = error.message.includes('nothing to commit') || 
+                           error.message.includes('up-to-date') ||
+                           error.message.includes('already exists');
+    
+    if (isExpectedError) {
+      console.log(`   ℹ️  ${errorMessage} (expected): ${error.message.split('\n')[0]}`);
+    } else {
+      console.warn(`⚠️  ${errorMessage}: ${error.message.split('\n')[0]}`);
+    }
+    
+    return { success: false, error: error.message };
+  }
+}
+
+// --- Helper: Commit and push generated files ---
+function commitAndPush() {
+  console.log("\n📝 Committing and pushing generated files to GitHub...");
+  
+  // Configure git user if not already configured (for CI environments)
+  gitExec('config --local user.email "github-actions[bot]@users.noreply.github.com"', 'Could not configure git email');
+  gitExec('config --local user.name "GitHub Actions"', 'Could not configure git name');
+  
+  // Add all generated HTML files
+  gitExec('add catalogue/**/*.html', 'Could not add files');
+  
+  // Check if there are changes to commit
+  try {
+    execSync('git diff --staged --quiet', { stdio: 'pipe' });
+    console.log("ℹ️  No changes to commit");
+    return;
+  } catch {
+    // There are changes, continue with commit
+  }
+  
+  // Commit the changes
+  const commitResult = gitExec('commit -m "🤖 Auto-generated catalogue preview pages"', 'Could not commit changes');
+  if (!commitResult.success) {
+    console.log("⚠️  Skipping push (commit failed)");
+    return;
+  }
+  
+  // Push to the current branch
+  const pushResult = gitExec('push', 'Could not push changes');
+  if (pushResult.success) {
+    console.log("✅ Successfully pushed generated files to GitHub!");
+  } else {
+    console.log("⚠️  Generated files committed locally but not pushed to GitHub");
+  }
+}
+
 // --- Main Function: Reads data and writes files ---
 async function main() {
-  console.log("🚀 Netlify Build: Generating Website Preview Pages...");
+  console.log("🚀 GitHub Preview Build: Generating Website Preview Pages...");
   
   const outRoot = path.resolve("catalogue"); // Target folder: /catalogue/
   const reserved = new Set(["_shared"]); // Don't overwrite this folder
@@ -249,7 +311,10 @@ async function main() {
     // console.log(`   - Created: ${slug}`);
   }
 
-  console.log(`✅ Netlify Build Complete: Generated ${ITEMS.length} preview pages successfully!`);
+  console.log(`✅ Generation Complete: Generated ${ITEMS.length} preview pages successfully!`);
+  
+  // 4. Commit and push the generated files to GitHub
+  commitAndPush();
 }
 
 // Run the function
