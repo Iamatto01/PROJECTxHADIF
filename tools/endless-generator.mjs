@@ -169,19 +169,29 @@ function generateBusinessName(businessType, categoryId) {
     "Luxe",
     "Classic",
     "Artisan",
+    "Crown",
+    "Peak",
+    "Skyline",
+    "Oasis",
+    "Ember",
+    "Crystal",
+    "Harmony",
+    "Velvet",
+    "Diamond",
+    "Platinum",
   ];
   
   const suffixes = {
-    food: ["Kitchen", "Bistro", "House", "Table", "Bar", "Grill", "Cafe", "Eatery"],
-    realestate: ["Realty", "Properties", "Estates", "Homes", "Group", "Partners"],
-    fitness: ["Fitness", "Gym", "Studio", "Club", "Center", "Zone", "Lab"],
-    beauty: ["Salon", "Spa", "Studio", "Lounge", "Bar", "Boutique"],
-    services: ["Services", "Solutions", "Pros", "Experts", "Co", "Works"],
-    education: ["Academy", "School", "Institute", "Learning", "Education", "Center"],
-    portfolio: ["Studio", "Creative", "Design", "Agency", "Works", "Co"],
-    events: ["Events", "Occasions", "Celebrations", "Planning", "Co"],
-    shop: ["Shop", "Store", "Boutique", "Market", "Emporium", "Collective"],
-    tech: ["Labs", "Tech", "Digital", "Solutions", "Systems", "Platform"],
+    food: ["Kitchen", "Bistro", "House", "Table", "Bar", "Grill", "Cafe", "Eatery", "Corner", "Place", "Room", "Spot"],
+    realestate: ["Realty", "Properties", "Estates", "Homes", "Group", "Partners", "Associates", "Advisors"],
+    fitness: ["Fitness", "Gym", "Studio", "Club", "Center", "Zone", "Lab", "Hub", "Arena"],
+    beauty: ["Salon", "Spa", "Studio", "Lounge", "Bar", "Boutique", "Haven", "Oasis"],
+    services: ["Services", "Solutions", "Pros", "Experts", "Co", "Works", "Masters", "Specialists"],
+    education: ["Academy", "School", "Institute", "Learning", "Education", "Center", "College", "Training"],
+    portfolio: ["Studio", "Creative", "Design", "Agency", "Works", "Co", "Lab", "Collective"],
+    events: ["Events", "Occasions", "Celebrations", "Planning", "Co", "Experiences", "Affairs"],
+    shop: ["Shop", "Store", "Boutique", "Market", "Emporium", "Collective", "Gallery", "Atelier"],
+    tech: ["Labs", "Tech", "Digital", "Solutions", "Systems", "Platform", "Innovation", "Ventures"],
   };
 
   const prefix = randomItem(prefixes);
@@ -197,51 +207,81 @@ function generateDescription(businessType, categoryId) {
       "Experience authentic {cuisine} with fresh, locally-sourced ingredients and exceptional service.",
       "Discover the perfect blend of traditional {cuisine} and modern culinary innovation.",
       "Your destination for delicious {cuisine}, crafted with passion and served with care.",
+      "Award-winning {cuisine} featuring seasonal menus and farm-to-table freshness.",
+      "Artisanal {cuisine} prepared by expert chefs in a warm, welcoming atmosphere.",
+      "Unforgettable {cuisine} experiences with creative dishes and impeccable presentation.",
     ],
     realestate: [
       "Find your dream property with our expert team and comprehensive listings.",
       "Trusted real estate professionals helping you navigate the property market with confidence.",
       "Your partner in finding the perfect home or investment property.",
+      "Premier real estate services with decades of local market expertise.",
+      "Luxury properties and personalized service for discerning buyers and sellers.",
+      "Your gateway to finding homes that match your lifestyle and budget perfectly.",
     ],
     fitness: [
       "Transform your fitness journey with expert trainers and state-of-the-art facilities.",
       "Achieve your wellness goals in a supportive, motivating environment.",
       "Where dedication meets results - your fitness transformation starts here.",
+      "Professional training programs tailored to your individual goals and fitness level.",
+      "Join a community of fitness enthusiasts committed to health and wellness.",
+      "Premium equipment, expert coaching, and results-driven workout programs.",
     ],
     beauty: [
       "Indulge in premium beauty treatments and exceptional service.",
       "Expert stylists and therapists dedicated to enhancing your natural beauty.",
       "Luxury beauty experiences tailored to your unique style and needs.",
+      "Pamper yourself with cutting-edge treatments and traditional beauty therapies.",
+      "Where artistry meets expertise - your personal beauty destination.",
+      "Transformative beauty services in a relaxing, upscale environment.",
     ],
     services: [
       "Professional, reliable service you can trust for all your needs.",
       "Expert solutions delivered with quality workmanship and customer care.",
       "Your local experts providing top-quality service and guaranteed satisfaction.",
+      "Fast, efficient service with transparent pricing and exceptional results.",
+      "Licensed professionals delivering excellence in every project, large or small.",
+      "24/7 emergency services and same-day appointments available.",
     ],
     education: [
       "Empowering students with knowledge, skills, and confidence for success.",
       "Expert instruction in a supportive learning environment.",
       "Quality education that inspires growth and achievement.",
+      "Personalized learning programs designed to unlock each student's potential.",
+      "Certified instructors providing engaging, results-focused education.",
+      "Accelerate your learning journey with proven teaching methods and expert mentors.",
     ],
     portfolio: [
       "Creative excellence delivered through innovative design and strategic thinking.",
       "Bringing visions to life with artistic expertise and professional execution.",
       "Award-winning creative work that makes an impact.",
+      "Transforming ideas into stunning visual experiences that captivate audiences.",
+      "Strategic creative solutions that elevate brands and drive engagement.",
+      "Exceptional craftsmanship and attention to detail in every project.",
     ],
     events: [
       "Creating unforgettable moments with meticulous planning and flawless execution.",
       "Your special occasions deserve extraordinary attention to detail.",
       "Making dreams come true, one celebration at a time.",
+      "Full-service event planning with personalized touches and seamless coordination.",
+      "From intimate gatherings to grand celebrations, we make every moment memorable.",
+      "Expert event design and management for stress-free, picture-perfect occasions.",
     ],
     shop: [
       "Curated selection of quality products for every style and occasion.",
       "Discover unique finds and exceptional value at our boutique.",
       "Your destination for quality products and personalized shopping experience.",
+      "Handpicked collections featuring the latest trends and timeless classics.",
+      "Premium products at fair prices with knowledgeable, friendly service.",
+      "Shop exclusive collections you won't find anywhere else.",
     ],
     tech: [
       "Innovative technology solutions that drive business growth and efficiency.",
       "Cutting-edge software built to solve real-world challenges.",
       "Transform your business with powerful, intuitive technology.",
+      "Enterprise-grade solutions with startup agility and customer-first support.",
+      "Cloud-based platforms designed for scalability, security, and performance.",
+      "Next-generation tools that automate workflows and boost productivity.",
     ],
   };
 
@@ -256,6 +296,9 @@ function generatePitch(businessType, style) {
     `Perfect for ${businessType.keywords[0]} businesses that want a ${style.toLowerCase()} online presence. Clean layout with strong CTAs to convert visitors into customers.`,
     `Built for ${businessType.name.toLowerCase()}s seeking a ${style.toLowerCase()} aesthetic. Includes all essential sections to showcase services and capture leads effectively.`,
     `Ideal ${style.toLowerCase()} template for ${businessType.keywords[0]} professionals. Features optimized sections for conversions and customer engagement.`,
+    `Modern ${style.toLowerCase()} design tailored for ${businessType.keywords[0]} businesses. Responsive layout ensures great experience on all devices.`,
+    `Stand out with this ${style.toLowerCase()} template designed specifically for ${businessType.keywords[0]} industry. Includes powerful call-to-action sections.`,
+    `Professional ${style.toLowerCase()} website template with everything ${businessType.name.toLowerCase()}s need to attract and convert customers online.`,
   ];
   return randomItem(pitches);
 }
@@ -299,9 +342,17 @@ function generateIncludes() {
     "Call-to-action blocks",
     "FAQ accordion",
     "Newsletter signup",
+    "Video background support",
+    "Parallax scrolling effects",
+    "Icon library included",
+    "Animation on scroll",
+    "Pricing tables",
+    "Team member profiles",
+    "Customer reviews section",
+    "Live chat widget ready",
   ];
   
-  return [...base, ...randomItems(extras, 2)];
+  return [...base, ...randomItems(extras, 3)];
 }
 
 // Generate best for list
