@@ -421,6 +421,16 @@ a{color:inherit}
     radial-gradient(320px 200px at 50% 75%, rgba(34,197,94,0.18), transparent 60%),
     linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.00));
   padding: 18px;
+  position: relative;
+}
+
+.preview__frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.28);
 }
 
 .priceRow{display:flex; justify-content: space-between; gap: 12px; align-items:center; flex-wrap:wrap}
