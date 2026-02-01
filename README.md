@@ -3,10 +3,11 @@
 A polished catalogue for selling small website templates online.
 
 - 10 categories
-- 50 products (5 per category)
+- 50+ products (expandable with automation)
 - Search / filter / sort
 - Product detail modal
 - Optional admin backend (email magic-link login)
+- **NEW: Automated website generator for endless mockups**
 
 ## Run the catalogue (simple)
 
@@ -65,6 +66,72 @@ Each product has:
 - `price`
 - `pages`, `bestFor`, `includes`, `tags`
 - `accent` colors (used for thumbnails)
+
+## 🤖 Automated Website Generator (NEW!)
+
+Generate unlimited mockup websites automatically with realistic content!
+
+### Quick Start (Easy Way)
+
+**Using the quickstart script:**
+```bash
+cd tools
+./quickstart.sh batch 20    # Generate 20 websites
+./quickstart.sh endless     # Generate forever (Ctrl+C to stop)
+./quickstart.sh help        # See all options
+```
+
+### Alternative (Direct Commands)
+
+**Endless Generation** (runs until you stop it):
+```bash
+cd tools
+node endless-generator.mjs
+```
+
+Press `Ctrl+C` to stop. Each website is saved automatically.
+
+**Batch Generation** (generate specific number):
+```bash
+cd tools
+node batch-generator.mjs 20  # generates 20 websites
+```
+
+### What Gets Generated
+
+Each website includes:
+- **Unique business name** with realistic details
+- **10 business categories**: Food, Real Estate, Fitness, Beauty, Services, Education, Portfolio, Events, Shop, Tech
+- **Multiple styles**: Modern, Minimal, Bold, Elegant, Playful, Corporate, Luxury, Editorial, Neon, Warm
+- **Realistic content**: Descriptions, features, pricing, pages
+- **Full HTML preview** page with detailed sections
+- **Auto-added** to catalogue database
+
+### Features
+
+✅ Generates detailed, realistic websites (not simple/empty)  
+✅ Creates unique business names and descriptions  
+✅ Automatic variety across categories and styles  
+✅ Saves continuously until stopped  
+✅ Progress logging with timestamps  
+✅ Each website has 6-7 relevant pages  
+✅ Includes pricing, features, and business details  
+✅ Enhanced content with multiple template variations  
+✅ Professional quality suitable for real use  
+
+### Generated Content Details
+
+Every website includes:
+- Hero section with business name and tagline
+- About section with business description
+- Services/Features with 7-8 included items
+- Multiple page templates (Home, About, Services, Contact, etc.)
+- Realistic pricing ($49-$149)
+- Style combinations and color palettes
+- SEO-friendly structure
+- Mobile-responsive layout
+
+See `tools/README-GENERATOR.md` for full documentation.
 
 ## Next step (later)
 
