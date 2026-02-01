@@ -1,0 +1,37 @@
+name: Build and Publish Catalogue
+
+# Trigger: Run this whenever 'main' branch is updated
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch: # Allows you to run it manually if needed
+
+permissions:
+  contents: write # Important: Gives the robot permission to save changes
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Download your code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Install Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 3. Run your Generator Script
+      - name: Generate Website
+        run: |
+          node tools/generate-previews.mjs
+
+      # 4. Save the new HTML files back to GitHub
+      - name: Commit and Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "🤖 Auto-generated catalogue pages"
+          file_pattern: 'catalogue/**/*.html' # Only save the HTML files
