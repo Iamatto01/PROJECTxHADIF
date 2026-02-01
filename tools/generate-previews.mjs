@@ -1,3 +1,24 @@
+/**
+ * Website Preview Generator (Netlify-Optimized)
+ * 
+ * This script generates HTML preview pages for each item in the catalogue.
+ * It's designed to run during Netlify builds - no git operations needed!
+ * 
+ * Usage:
+ *   node tools/generate-previews.mjs
+ * 
+ * What it does:
+ *   - Reads items from catalogue-data.js
+ *   - Generates individual HTML preview pages
+ *   - Saves files to /catalogue/[slug]/[slug].html
+ * 
+ * Netlify Integration:
+ *   - Set Build Command: node tools/generate-previews.mjs
+ *   - Set Publish Directory: . (or leave blank)
+ *   - Files are generated fresh on every deploy
+ *   - No need to commit generated files to git!
+ */
+
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -198,9 +219,9 @@ function pageHtml({ sku, name, slug }) {
 
 // --- Main Function: Reads data and writes files ---
 async function main() {
-  console.log("🚀 Starting Website Generation...");
+  console.log("🚀 Netlify Build: Generating Website Preview Pages...");
   
-  const outRoot = path.resolve("../catalogue"); // Target folder
+  const outRoot = path.resolve("catalogue"); // Target folder: /catalogue/
   const reserved = new Set(["_shared"]); // Don't overwrite this folder
   const used = new Map(); // Track slugs to avoid duplicates
 
@@ -228,7 +249,7 @@ async function main() {
     // console.log(`   - Created: ${slug}`);
   }
 
-  console.log(`✅ Generated ${ITEMS.length} preview pages under /catalogue/`);
+  console.log(`✅ Netlify Build Complete: Generated ${ITEMS.length} preview pages successfully!`);
 }
 
 // Run the function

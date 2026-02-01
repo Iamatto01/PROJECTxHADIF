@@ -8,6 +8,24 @@ A polished catalogue for selling small website templates online.
 - Product detail modal
 - Optional admin backend (email magic-link login)
 - **NEW: Automated website generator for endless mockups**
+- **✨ Netlify-optimized for easy deployment**
+
+## 🚀 Deploy to Netlify
+
+This repository is ready to deploy on Netlify with zero configuration!
+
+**[📖 Read the Netlify Deployment Guide →](NETLIFY-DEPLOYMENT.md)**
+
+Quick deploy: Just connect your GitHub repo to Netlify and it will automatically:
+- Generate all preview pages during build
+- Deploy your complete catalogue
+- Rebuild automatically on every push
+
+Benefits:
+- ✅ No need to commit generated HTML files
+- ✅ Cleaner repository
+- ✅ Faster updates (edit data, push, done!)
+- ✅ No infinite build loops
 
 ## Run the catalogue (simple)
 
