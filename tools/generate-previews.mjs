@@ -1,8 +1,10 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
+// Import your data
 import { ITEMS } from "../catalogue/catalogue-data.js";
 
+// --- Helper: Convert names to URL-friendly slugs ---
 function slugify(name) {
   return (name || "")
     .toString()
@@ -13,8 +15,20 @@ function slugify(name) {
     .replace(/^_+|_+$/g, "");
 }
 
+// --- Helper: Escape special characters for HTML safety ---
+function escapeHtml(s) {
+  return (s ?? "")
+    .toString()
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+// --- Template: The HTML Structure for your pages ---
 function pageHtml({ sku, name, slug }) {
-  // This HTML is intentionally the same shell for all templates; preview.js renders content by SKU.
+  // This uses your shared CSS and JS to load the content dynamically
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -182,46 +196,40 @@ function pageHtml({ sku, name, slug }) {
 `;
 }
 
-function escapeHtml(s) {
-  return (s ?? "")
-    .toString()
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
-}
-
+// --- Main Function: Reads data and writes files ---
 async function main() {
-  const outRoot = path.resolve("../catalogue");
+  console.log("🚀 Starting Website Generation...");
+  
+  const outRoot = path.resolve("../catalogue"); // Target folder
+  const reserved = new Set(["_shared"]); // Don't overwrite this folder
+  const used = new Map(); // Track slugs to avoid duplicates
 
-  // Avoid touching internal folders
-  const reserved = new Set(["_shared"]);
-
-  // Ensure unique slugs
-  const used = new Map();
-
+  // 1. Loop through every item in your database
   for (const item of ITEMS) {
     const base = slugify(item.name);
     let slug = base;
 
+    // Handle duplicate names
     if (!slug || reserved.has(slug)) slug = `${base || "template"}_${item.sku.toLowerCase().replace(/[^a-z0-9]+/g, "_")}`;
-
     const prevSku = used.get(slug);
     if (prevSku && prevSku !== item.sku) {
       slug = `${base}_${item.sku.toLowerCase().replace(/[^a-z0-9]+/g, "_")}`;
     }
-
     used.set(slug, item.sku);
 
+    // 2. Create the folder: /catalogue/template_name/
     const dir = path.join(outRoot, slug);
     await fs.mkdir(dir, { recursive: true });
 
+    // 3. Write the HTML file
     const file = path.join(dir, `${slug}.html`);
     await fs.writeFile(file, pageHtml({ sku: item.sku, name: item.name, slug }), "utf8");
+    
+    // console.log(`   - Created: ${slug}`);
   }
 
-  console.log(`Generated ${ITEMS.length} preview pages under /catalogue/<slug>/<slug>.html`);
+  console.log(`✅ Generated ${ITEMS.length} preview pages under /catalogue/`);
 }
 
+// Run the function
 await main();
