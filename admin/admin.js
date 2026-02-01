@@ -1,5 +1,12 @@
 const $ = (s, r = document) => r.querySelector(s);
 
+// Admin Configuration
+const ADMIN_CONFIG = {
+  primaryAdminEmail: "muhammadsaifudinmj@gmail.com",
+  githubRepo: "Iamatto01/PROJECTxHADIF",
+  workflowFileName: "build_catalogue.yml"
+};
+
 const els = {
   emailInput: $("#emailInput"),
   loginBtn: $("#loginBtn"),
@@ -17,6 +24,9 @@ const els = {
   reloadCfgBtn: $("#reloadCfgBtn"),
   saveCfgBtn: $("#saveCfgBtn"),
   configJson: $("#configJson"),
+
+  generateWebsiteBtn: $("#generateWebsiteBtn"),
+  generateMsg: $("#generateMsg")
 };
 
 function apiBase() {
@@ -48,6 +58,8 @@ function setEnabled(enabled) {
   els.reloadCfgBtn.disabled = !enabled;
   els.saveCfgBtn.disabled = !enabled;
   els.configJson.disabled = !enabled;
+
+  els.generateWebsiteBtn.disabled = !enabled;
 
   els.logoutBtn.hidden = !enabled;
   els.meBox.hidden = !enabled;
@@ -109,6 +121,60 @@ els.saveCfgBtn.addEventListener("click", async () => {
   const parsed = JSON.parse(els.configJson.value);
   await api("/api/config/", { method: "PUT", body: JSON.stringify(parsed) });
   els.authMsg.textContent = "Saved config.";
+});
+
+els.generateWebsiteBtn.addEventListener("click", async () => {
+  els.generateMsg.textContent = "Triggering GitHub Action workflow...";
+  els.generateWebsiteBtn.disabled = true;
+  
+  try {
+    // Try to trigger via backend API first (if backend supports it)
+    try {
+      await api("/api/github/trigger-workflow", { method: "POST" });
+      els.generateMsg.textContent = "✅ Website generation workflow triggered successfully! Check GitHub Actions for progress.";
+      return;
+    } catch (backendError) {
+      // Backend doesn't support it, try direct GitHub API
+      console.log("Backend doesn't support workflow trigger, trying direct GitHub API");
+    }
+    
+    // Fall back to direct GitHub API call
+    // Note: This requires CORS to be enabled on GitHub API or a browser extension
+    // For production, this should be handled by the backend
+    const githubToken = prompt("Enter your GitHub Personal Access Token (with 'repo' and 'actions' scopes):\n\nYou can create one at: https://github.com/settings/tokens");
+    
+    if (!githubToken) {
+      els.generateMsg.textContent = "❌ GitHub token required to trigger workflow.";
+      return;
+    }
+    
+    const response = await fetch(
+      `https://api.github.com/repos/${ADMIN_CONFIG.githubRepo}/actions/workflows/${ADMIN_CONFIG.workflowFileName}/dispatches`,
+      {
+        method: "POST",
+        headers: {
+          "Accept": "application/vnd.github.v3+json",
+          "Authorization": `token ${githubToken}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          ref: "main"
+        })
+      }
+    );
+    
+    if (response.ok || response.status === 204) {
+      els.generateMsg.textContent = "✅ Website generation workflow triggered successfully! Check GitHub Actions for progress.";
+    } else {
+      const errorText = await response.text();
+      throw new Error(`GitHub API error: ${response.status} ${errorText}`);
+    }
+  } catch (error) {
+    els.generateMsg.textContent = `❌ Error: ${error.message}`;
+    console.error("Failed to trigger workflow:", error);
+  } finally {
+    els.generateWebsiteBtn.disabled = false;
+  }
 });
 
 checkMe();

@@ -64,6 +64,17 @@
     </section>
 
     <section class="card">
+      <div class="row">
+        <h2 class="h2">Website Operations</h2>
+      </div>
+      <p class="muted">Rebuild the entire website by triggering the GitHub Action workflow.</p>
+      <div>
+        <button id="generateWebsiteBtn" class="btn" type="button" disabled>Generate New Website</button>
+        <div id="generateMsg" class="muted" style="margin-top: 8px;"></div>
+      </div>
+    </section>
+
+    <section class="card">
       <h2 class="h2">First-time setup</h2>
       <ol class="muted">
         <li>Run backend: <span class="mono">cd server</span> → <span class="mono">npm install</span> → <span class="mono">npm run dev</span></li>
