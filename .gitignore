@@ -38,11 +38,16 @@ Desktop.ini
 dist/
 build/
 
-# Netlify-generated files (optional)
-# Uncomment these lines if you want Netlify to generate preview pages on every deploy
-# and keep them out of your git history (recommended for cleaner repo)
+# Netlify note: The catalogue preview folders are currently committed to git.
+# If you want a cleaner repository, you can uncomment the lines below to ignore
+# generated preview pages (Netlify will generate them fresh on every deploy).
+# However, this means the files won't be available when viewing the repo directly.
+#
+# To enable this optimization:
+# 1. Uncomment the lines below
+# 2. Run: git rm -r --cached catalogue/*/
+# 3. Run: git add catalogue/_shared/ catalogue/*.js -f
+# 4. Commit the changes
+#
 # catalogue/*/
 # !catalogue/_shared/
-# !catalogue/catalogue-data.js
-# !catalogue/config.js
-# !catalogue/store.js
