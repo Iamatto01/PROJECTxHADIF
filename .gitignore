@@ -51,3 +51,4 @@ build/
 #
 # catalogue/*/
 # !catalogue/_shared/
+test-preview.html
