@@ -382,8 +382,10 @@ function openProduct(sku) {
   }
 
   if (els.openPreviewBtn) {
+    // Store the URL on the button to avoid closure issues
+    els.openPreviewBtn.dataset.previewUrl = previewUrl;
     els.openPreviewBtn.onclick = () => {
-      window.open(previewUrl, "_blank", "noopener,noreferrer");
+      window.open(els.openPreviewBtn.dataset.previewUrl, "_blank", "noopener,noreferrer");
     };
   }
 
